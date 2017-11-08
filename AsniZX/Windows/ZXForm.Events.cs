@@ -1,5 +1,4 @@
 ﻿using AsniZX.SubSystem.Display;
-using SlimDX.DXGI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +20,7 @@ namespace AsniZX
         {
             _rendererRunning = false;
             _renderThread?.Abort();
+            Speccy.EmulationThread?.Abort();
             Application.Exit();
         }
 
@@ -28,6 +28,7 @@ namespace AsniZX
         {
             _rendererRunning = false;
             _renderThread?.Abort();
+            Speccy.EmulationThread?.Abort();
         }
 
         /*

@@ -6,16 +6,31 @@ namespace AsniZX.SubSystem.Display
     /// </summary>
     public interface IRenderer
     {
-        // The renderer type
+        /// <summary>
+        /// Renderer type
+        /// </summary>
         RenderEngine Renderer { get; }
 
-        // The draw method
+        /// <summary>
+        /// Accepts a framedata object and attempts to draw it to the screen
+        /// </summary>
+        /// <param name="fd"></param>
         void Draw(FrameData fd);
 
-        // The initialisation method
+        /// <summary>
+        /// Draw to the screen without framedata object (uses defaults)
+        /// </summary>
+        void Draw();
+
+        /// <summary>
+        /// The init routine - called everytime a display size change or renderer change happens
+        /// </summary>
+        /// <param name="displayHandler"></param>
         void Initialise(DisplayHandler displayHandler); // ZXForm form);
 
-        // The stop rendering method
+        /// <summary>
+        /// Stops rendering
+        /// </summary>
         void StopRendering();
 
 

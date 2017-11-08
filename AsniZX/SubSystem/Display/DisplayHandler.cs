@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace AsniZX.SubSystem.Display
 {
+    /// <summary>
+    /// Main class for handling writing to the display
+    /// </summary>
     public unsafe class DisplayHandler
     {
         /// <summary>

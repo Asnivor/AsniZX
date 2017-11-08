@@ -35,6 +35,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BizHawk.Common, Version=2.0.0.12914, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BizHawk.Z80A\Binaries\BizHawk.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="BizHawk.Emulation.Common, Version=2.0.0.12914, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\BizHawk.Z80A\Binaries\BizHawk.Emulation.Common.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.4.1.0-ci184\lib\net45\SharpDX.dll</HintPath>
       <Private>True</Private>
@@ -55,8 +63,8 @@
       <HintPath>..\packages\SharpDX.Mathematics.4.1.0-ci184\lib\net45\SharpDX.Mathematics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
-      <HintPath>..\packages\SlimDX.4.0.13.44\lib\NET40\SlimDX.dll</HintPath>
+    <Reference Include="SharpDX.XAudio2, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.XAudio2.4.1.0-ci184\lib\net45\SharpDX.XAudio2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -78,12 +86,60 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spectrum\Emulator.cs" />
+    <Compile Include="SubSystem\Sound\SoundHandler.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IBorder.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IInterrupt.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IMemory.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IPort.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IScreen.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\ISpeccyModel.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\ISpectrum.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IClockBoundDevice.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IDevice.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IMemoryDevice.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IPortDevice.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IZ80Cpu.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IZ80CpuTestSupport.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\BranchEvent.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\IBranchDebugSupport.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\IStackDebugSupport.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\StackContentManipulationEvent.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\StackPointerManipulationEvent.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Providers\IClockProvider.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Exceptions.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\FlagSetMask.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\FlagsResetMask.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Reg16Index.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Reg8Index.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\RegisterAddressException.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Registers.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80AluHelpers.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80BitOperations.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Cpu.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Debug.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80EventArgs.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80ExtendedOperations.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80IndexedBitOperations.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80IndexedOperations.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80OpCodeHelpers.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80OperationCodeEventArgs.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Operations.cs" />
+    <Compile Include="ZXSpectrum\Hardware\CPU\Z80StateFlags.cs" />
+    <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KMemory.cs" />
+    <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KPort.cs" />
+    <Compile Include="ZXSpectrum\Hardware\Machines\SpectrumBase.cs" />
+    <Compile Include="ZXSpectrum\Hardware\Machines\ZXSpectrum48K.cs" />
+    <Compile Include="ZXSpectrum\Machine.cs" />
+    <Compile Include="ZXSpectrum\Models\Models.cs" />
     <Compile Include="SubSystem\Display\DisplayHandler.cs" />
     <Compile Include="SubSystem\Display\DisplaySurface.cs" />
     <Compile Include="SubSystem\Display\Enums.cs" />
     <Compile Include="SubSystem\Display\FrameData.cs" />
     <Compile Include="SubSystem\Display\IRenderer.cs" />
     <Compile Include="SubSystem\Display\SharpDXRenderer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SubSystem\Display\SoftRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\ZXForm.cs">
@@ -95,6 +151,13 @@
     <Compile Include="Windows\ZXForm.KeyInput.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ZXSpectrum\Hardware\Machines\_48K.cs" />
+    <Compile Include="ZXSpectrum\Providers\ClockProvider.cs" />
+    <Compile Include="ZXSpectrum\Settings\Globals.cs" />
+    <Compile Include="ZXSpectrum\Settings\SpectrumType.cs" />
+    <Compile Include="ZXSpectrum\Spectrum.cs" />
+    <Compile Include="ZXSpectrum\Spectrum.IMemoryDomains.cs" />
+    <Compile Include="ZXSpectrum\Hardware\Display\ULA.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -120,18 +183,36 @@
     <Compile Include="Windows\ZXForm.Events.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ZXSpectrum\Spectrum.IDebuggable.cs" />
+    <Compile Include="ZXSpectrum\Spectrum.IEmulator.cs" />
+    <Compile Include="ZXSpectrum\Spectrum.IInputPollable.cs" />
+    <Compile Include="ZXSpectrum\Spectrum.IStatable.cs" />
+    <None Include="ROMs\128.ROM" />
+    <None Include="ROMs\48.ROM" />
+    <None Include="ROMs\gdos-pd.rom" />
+    <None Include="ROMs\gdos.rom" />
+    <None Include="ROMs\if1.rom" />
+    <None Include="ROMs\pentagon.rom" />
+    <None Include="ROMs\plus2.rom" />
+    <None Include="ROMs\plus3.rom" />
+    <None Include="ROMs\scorpion.rom" />
+    <None Include="ROMs\trdos.rom" />
+    <None Include="ZXSpectrum\Hardware\CPU\readme.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserControls\" />
+    <Folder Include="ZXSpectrum\Hardware\Peripherals\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BizHawk.Z80A\BizHawk.Z80A.csproj">
       <Project>{d28ebea4-9397-4a12-9ed3-df76cf328eaf}</Project>
       <Name>BizHawk.Z80A</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ZXSpectrum\Hardware\CPU\license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -141,4 +222,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <MoveToLibFolder Include="$(OutputPath)*.dll ; $(OutputPath)*.pdb ; $(OutputPath)*.xml" />
+    </ItemGroup>
+    <Move SourceFiles="@(MoveToLibFolder)" DestinationFolder="$(OutputPath)lib" OverwriteReadOnlyFiles="true" />
+  </Target>
 </Project>

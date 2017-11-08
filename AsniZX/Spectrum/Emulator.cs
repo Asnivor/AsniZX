@@ -8,25 +8,26 @@ using AsniZX.Extensions;
 using AsniZX.SubSystem.Display;
 
 using BizHawk.Z80A;
+using BizHawk.Emulation.Common;
 
 namespace AsniZX.Spectrum
 {
     public class Emulator
     {
-        // CPU
-        Z80A _cpu;
+        private readonly Z80A _cpu;
+        private readonly byte[] _biosRom;
 
         private Random rnd = new Random();
 
         private const int GameWidth = 256, GameHeight = 192;
         private uint _bufferPos;
         public readonly uint[] RawBitmap = new uint[GameWidth * GameHeight];
-        /*
-        private readonly uint[] _priority = new uint[GameWidth * GameHeight];
-        private readonly uint[] _scanlineOAM = new uint[8 * 4];
-        private readonly bool[] _isSprite0 = new bool[8];
+        
 
-        */
+        public void Start()
+        {
+
+        }
 
         /// <summary>
         /// The regular speccy palette
@@ -60,16 +61,6 @@ namespace AsniZX.Spectrum
                                                     0x3f7f62,0x3f7f7f,0x3f647f,0x3f497f,0x503f7f,0x6b3f7f,0x7f3f76,0x7f3f5b
                                                   };
 
-        public Emulator()
-        {
-            _cpu = new Z80A();
-        }
-
-        public void Start()
-        {
-
-        }
-
         public void ProcessFrame()
         {
             RawBitmap.Fill(0u);
@@ -83,30 +74,20 @@ namespace AsniZX.Spectrum
 
                 for (int i = 0; i < 64; i++)
                 {
-                    
                     // horizontal
-                    RawBitmap[_bufferPos + (uint)i] = ULAPlusColours[i];
-                    // vertical
-                    //RawBitmap[_bufferPos + (8 * (i))] = color;
+                    if (_bufferPos % 2 != 0)
+                    {
+                        ///RawBitmap[_bufferPos + (uint)i] = ULAPlusColours[rnd.Next(0, ULAPlusColours.Count() - 1)];
+                    }
+                    else
+                    {
+                        ///RawBitmap[_bufferPos + (uint)i] = ULAPlusColours[i];
+                        RawBitmap[_bufferPos + (uint)i] = ULAPlusColours[rnd.Next(0, ULAPlusColours.Count() - 1)];
+                    }
+
                 }
 
                 _bufferPos += 64;
-
-                /*
-                if (_bufferPos % 2 != 0)
-                {
-                    RawBitmap[_bufferPos] = 0x000000;
-                    
-                }
-                else
-                {
-                    //RawBitmap[_bufferPos] = NormalColors[rnd.Next(0, NormalColors.Length - 1)]; //(uint)rnd.Next(1 << 30);
-                    RawBitmap[_bufferPos] = 0xC0C0C0;
-                }
-
-                _bufferPos++;
-                */
-
             }
 
             FrameData fd = new FrameData();

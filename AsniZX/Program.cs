@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using SlimDX.Windows;
-
 namespace AsniZX
 {
     static class Program

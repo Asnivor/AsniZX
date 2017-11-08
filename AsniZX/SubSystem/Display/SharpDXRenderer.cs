@@ -21,9 +21,6 @@ namespace AsniZX.SubSystem.Display
         Bitmap gameBitmap;
         RawRectangleF clientArea;
 
-        public int cWidth { get; set; }
-        public int cHeight { get; set; }
-
         private FrameData framedatabuffer;
 
         private DisplayHandler _displayHandler;
@@ -32,12 +29,14 @@ namespace AsniZX.SubSystem.Display
 
         public RenderEngine Renderer => RenderEngine.SharpDX;
 
+
+        /// <summary>
+        /// The init routine - called everytime a display size change or renderer change happens
+        /// </summary>
+        /// <param name="displayHandler"></param>
         public void Initialise(DisplayHandler dh)
         {
-            _displayHandler = dh;
-
-            cWidth = ClientSize.Width;
-            cHeight = ClientSize.Height;
+            _displayHandler = dh;    
 
             lock (_drawlock)
             {
@@ -133,40 +132,12 @@ namespace AsniZX.SubSystem.Display
                     Right = ClientSize.Width - padR
                 };
 
-                /*
-                clientArea = new RawRectangleF
-                {
-                    Left = 24,
-                    Top = 48,
-                    Bottom = ClientSize.Height - 48,
-                    Right = ClientSize.Width - 24
-                };
-                */
-
-
 
                 factory.Dispose();
                 surface.Dispose();
                 backBuffer.Dispose();
                 _form.ready = true;
             }
-        }
-
-            private RawRectangleF SetClientAreaSize(int width, int height)
-        {
-            //_form.WindowSize[0] = width + 48;
-            //_form.WindowSize[1] = height + 48;
-
-            var ca = new RawRectangleF
-            {
-                Left = 0,
-                Top = 0,
-                Bottom = height,
-                Right = width
-            };
-
-
-            return ca;
         }
 
         /// <summary>
@@ -206,41 +177,16 @@ namespace AsniZX.SubSystem.Display
         }
 
         /// <summary>
-        /// Draw routine
+        /// Draw to the screen without framedata object (uses defaults)
         /// </summary>
-        /// 
         public void Draw()
         {
             Draw(framedatabuffer);
         }
-            /*
-        public void Draw()
-        {
-            lock (_drawlock)
-            {
-                if (_form == null || d2dRenderTarget == null || !_form.ready || d2dRenderTarget.IsDisposed) return;
-                d2dRenderTarget.BeginDraw();
-                d2dRenderTarget.Clear(Color.Red);
 
-                if (_form.gameStarted)
-                {
-                    int stride = ZXForm.GameWidth * 4;
-                    gameBitmap.CopyFromMemory(_form.rawBitmap, stride);
-
-                    d2dRenderTarget.DrawBitmap(gameBitmap, clientArea, 1f,
-                        _form._filterMode == FilterMode.Linear
-                            ? BitmapInterpolationMode.Linear
-                            : BitmapInterpolationMode.NearestNeighbor);
-                }
-
-                d2dRenderTarget.EndDraw();
-                swapChain.Present(0, PresentFlags.None);
-            }
-        }
-        */
 
         /// <summary>
-        /// Stop routine
+        /// Stops rendering
         /// </summary>
         public void StopRendering()
         {
@@ -272,6 +218,9 @@ namespace AsniZX.SubSystem.Display
             }
         }
 
+        /// <summary>
+        /// Get rid of all the D3D objects before another init can happen
+        /// </summary>
         private void DisposeD3D()
         {
             lock (_drawlock)

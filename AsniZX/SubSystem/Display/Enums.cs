@@ -13,7 +13,8 @@ namespace AsniZX.SubSystem.Display
     {
         None,
         Direct3D,
-        SharpDX
+        SharpDX,
+        Software
     }
 
     /// <summary>

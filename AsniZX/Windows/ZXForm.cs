@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using AsniZX.SubSystem.Display;
 using AsniZX.Spectrum;
+using AsniZX.ZXSpectrum;
 
 //using SlimDX;
 //using SlimDX.D3DCompiler;
@@ -26,6 +27,13 @@ namespace AsniZX
         public static ZXForm MainForm { get; private set; }
 
         public DisplayHandler displayHandler { get; set; }
+
+        public ZXSpectrum.Spectrum Speccy { get; set; }
+
+        /// <summary>
+        /// Current frames-per-second calculation
+        /// </summary>
+        public int FPS { get; set; }
 
         /*
         public static SubSystem.Display.DisplayManager dm;
@@ -83,6 +91,12 @@ namespace AsniZX
 
             //SetRenderer((IRenderer)Activator.CreateInstance(typeof(D3DRenderer)));    
         }
+
+        public void SetFPS(int val)
+        {
+            toolStripStatusLabel1.Text = val + " FPS";
+        }
+
         /*
         private void SetRenderer(IRenderer renderer)
         {
@@ -107,26 +121,47 @@ namespace AsniZX
 
         public void Pause()
         {
-            suspended = true;
+            //suspended = true;
+            //Speccy.PauseEmulation();
+            Speccy.IsEmulationPaused = true;
         }
 
         public void UnPause()
         {
-            suspended = false;
+            //suspended = false;
+            //Speccy.ResumeEmulation();
+            Speccy.IsEmulationPaused = false;
         }
 
         public void TogglePause()
         {
-            
-            if (suspended == true)
-                suspended = false;
+            if (Speccy.IsEmulationPaused)
+                Speccy.IsEmulationPaused = false;
             else
+                Speccy.IsEmulationPaused = true;
+            /*
+            if (suspended == true)
+            {
+                suspended = false;
+                Speccy.ResumeEmulation();
+            }
+                
+            else
+            {
                 suspended = true;
-               
+                Speccy.PauseEmulation();
+            }
+                
+               */
         }
 
         private void TestStart()
         {
+            Speccy = new ZXSpectrum.Spectrum(SpecModel._48k);
+            Speccy.StartEmulation();
+
+
+            /*
             emu = new Emulator();
 
             _renderThread = new Thread(() =>
@@ -156,6 +191,7 @@ namespace AsniZX
                 }
             });
             _renderThread.Start();
+            */
         }
 
         

@@ -7,7 +7,7 @@ namespace BizHawk.Z80A
         private int totalExecutedCycles;
         public int TotalExecutedCycles { get { return totalExecutedCycles; } set { totalExecutedCycles = value; } }
 
-        private int EI_pending;
+        public int EI_pending;
 
         public const ushort CBpre = 0;
         public const ushort EXTDpre = 1;
