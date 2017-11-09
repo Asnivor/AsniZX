@@ -1,4 +1,5 @@
-﻿using AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Providers;
+﻿using AsniZX.ZXSpectrum.Abstraction;
+using AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Providers;
 using System.Threading;
 
 namespace AsniZX.ZXSpectrum.Providers
@@ -7,7 +8,7 @@ namespace AsniZX.ZXSpectrum.Providers
     /// This class implements a clock provider that allows access to the 
     /// high resoultion system clock.
     /// </summary>
-    public class ClockProvider : IClockProvider //, VmComponentProviderBase
+    public class ClockProvider : IClockProvider
     {
         private long _frequency;
 
@@ -16,7 +17,6 @@ namespace AsniZX.ZXSpectrum.Providers
         /// </summary>
         public ClockProvider()
         {
-            // ReSharper disable once VirtualMemberCallInConstructor
             Reset();
         }
 
@@ -116,5 +116,15 @@ namespace AsniZX.ZXSpectrum.Providers
         [System.Runtime.InteropServices.DllImport("Kernel32.dll")]
         public static extern bool QueryPerformanceFrequency(
             out long lpFrequency);
+
+
+        public ISpectrum Spec { get; private set; }
+        
+        public void OnAttached(ISpectrum spec)
+        {
+            Spec = spec;
+        }
     }
+
+   
 }

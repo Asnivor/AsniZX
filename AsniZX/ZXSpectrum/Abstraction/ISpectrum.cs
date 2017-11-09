@@ -10,7 +10,7 @@ namespace AsniZX.ZXSpectrum.Abstraction
     /// <summary>
     /// Interface representing a spectrum machine
     /// </summary>
-    public interface ISpectrum
+    public interface ISpectrum : IFrameBound
     {
         /// <summary>
         /// Instance of the parent machine class - passed in via contructor
@@ -69,17 +69,17 @@ namespace AsniZX.ZXSpectrum.Abstraction
         /// <summary>
         /// Border class used by this spectrum model
         /// </summary>
-        IBorder Border { get; }
+        IBorder BorderDev { get; }
 
         /// <summary>
         /// ULA class responsible for rendering the screen output
         /// </summary>
-        IScreen Screen { get; }
+        IScreen ScreenDev { get; }
 
         /// <summary>
         /// ULA class responsible for raising vblank interrupts
         /// </summary>
-        IInterrupt Interrupt { get; }
+        IInterrupt InterruptDev { get; }
 
         /// <summary>
         /// Main execution cycle

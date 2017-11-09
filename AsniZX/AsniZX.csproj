@@ -87,10 +87,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spectrum\Emulator.cs" />
     <Compile Include="SubSystem\Sound\SoundHandler.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\ICpuBound.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IFrameBound.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\IProvider.cs" />
+    <Compile Include="ZXSpectrum\Abstraction\ISpectrumAttachable.cs" />
     <Compile Include="ZXSpectrum\Abstraction\IBorder.cs" />
     <Compile Include="ZXSpectrum\Abstraction\IInterrupt.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IMemory.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IPort.cs" />
     <Compile Include="ZXSpectrum\Abstraction\IScreen.cs" />
     <Compile Include="ZXSpectrum\Abstraction\ISpeccyModel.cs" />
     <Compile Include="ZXSpectrum\Abstraction\ISpectrum.cs" />
@@ -125,6 +127,8 @@
     <Compile Include="ZXSpectrum\Hardware\CPU\Z80OperationCodeEventArgs.cs" />
     <Compile Include="ZXSpectrum\Hardware\CPU\Z80Operations.cs" />
     <Compile Include="ZXSpectrum\Hardware\CPU\Z80StateFlags.cs" />
+    <Compile Include="ZXSpectrum\Hardware\Display\Border.cs" />
+    <Compile Include="ZXSpectrum\Hardware\IO\Interrupt.cs" />
     <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KMemory.cs" />
     <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KPort.cs" />
     <Compile Include="ZXSpectrum\Hardware\Machines\SpectrumBase.cs" />

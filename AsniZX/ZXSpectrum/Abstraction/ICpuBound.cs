@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace AsniZX.ZXSpectrum.Abstraction
 {
     /// <summary>
-    /// ULA Border
+    /// Interface that designates the class it bound to CPU T-States
     /// </summary>
-    public interface IBorder : IDevice, ISpectrumAttachable
+    public interface ICpuBound : IDevice
     {
         /// <summary>
-        /// Gets/Sets the ULA border colour
+        /// Get the current T-State of the device
         /// </summary>
-        int BorderColour { get; set; }
+        long TStates { get; }
     }
 }

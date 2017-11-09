@@ -4,7 +4,7 @@ namespace AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Devices
     /// <summary>
     /// This interface represents the memory used by the Z80 CPU.
     /// </summary>
-    public interface IMemoryDevice
+    public interface IMemoryDevice : IDevice
     {
         /// <summary>
         /// Reads the memory at the specified address

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AsniZX.ZXSpectrum.Abstraction
 {
-    public interface IScreen
+    public interface IScreen : ISpectrumAttachable
     {
     }
 }

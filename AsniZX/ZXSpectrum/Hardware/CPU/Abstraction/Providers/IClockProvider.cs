@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using AsniZX.ZXSpectrum.Abstraction;
+using System.Threading;
 
 namespace AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Providers
 {
@@ -6,7 +7,7 @@ namespace AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Providers
     /// This provider describes a  high resolution clock
     /// that can be used for timing tasks.
     /// </summary>
-    public interface IClockProvider //: IVmComponentProvider
+    public interface IClockProvider : IProvider, ISpectrumAttachable
     {
         /// <summary>
         /// Retrieves the frequency of the clock. This value shows new

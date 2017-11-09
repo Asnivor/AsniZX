@@ -2,6 +2,7 @@
 using AsniZX.ZXSpectrum.Hardware.CPU;
 using AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Devices;
 using AsniZX.ZXSpectrum.Hardware.CPU.Abstraction.Providers;
+using AsniZX.ZXSpectrum.Hardware.Display;
 using AsniZX.ZXSpectrum.Hardware.IO;
 using AsniZX.ZXSpectrum.Providers;
 using System;
@@ -20,6 +21,10 @@ namespace AsniZX.ZXSpectrum.Hardware.Machines
 
         private readonly int _tStatesPerFrame;
         private bool _frameCompleted;
+
+        private readonly List<IDevice> _spectrumDevices = new List<IDevice>();
+        private readonly List<IFrameBound> _frameBoundDevices;
+        private readonly List<ICpuBound> _cpuBoundDevices;
 
         #endregion
 
@@ -78,17 +83,17 @@ namespace AsniZX.ZXSpectrum.Hardware.Machines
         /// <summary>
         /// Border class used by this spectrum model
         /// </summary>
-        public IBorder Border { get; }
+        public IBorder BorderDev { get; }
 
         /// <summary>
         /// ULA class responsible for rendering the screen output
         /// </summary>
-        public IScreen Screen { get; }
+        public IScreen ScreenDev { get; }
 
         /// <summary>
         /// ULA class responsible for raising vblank interrupts
         /// </summary>
-        public IInterrupt Interrupt { get; }
+        public IInterrupt InterruptDev { get; }
 
         #endregion
 
@@ -122,7 +127,7 @@ namespace AsniZX.ZXSpectrum.Hardware.Machines
         /// <summary>
         /// The number of T-States that have overflowed from the previous frame
         /// </summary>
-        public int OverflowTStates { get; set; }
+        public int OverFlowTStates { get; set; }
 
         /// <summary>
         /// The clock provider for this emulation
@@ -142,18 +147,70 @@ namespace AsniZX.ZXSpectrum.Hardware.Machines
             // pass in the machine class
             _Machine = machine;
 
-            // init the clockprovider
-            Clock = ClockProvider;
-
-            // init memory provider
-            Memory = new ZXSpectrum48KMemory();
-
-            // init port provider
-            Port = new ZXSpectrum48KPort();            
-
-            // instantiate CPU
+            // init CPU
+            Memory = new ZXSpectrum48KMemory(this);
+            Port = new ZXSpectrum48KPort(this);    
             Cpu = new Z80Cpu(Memory, Port);
+
+            // init the clockprovider - this may need to be instantiated higher up the chain
+            Clock = new ClockProvider();
+
+            // Instantiate devices
+            BorderDev = new Border();
+            InterruptDev = new Interrupt(InterruptTState);
+            // screen
+            // sound
+            // keyboard
+            // tape
+
+            // Initial frame calculations
+
+
+            // Attach all devices to this spectrum
+
+            _spectrumDevices.Add(Memory);
+            _spectrumDevices.Add(Port);
+            _spectrumDevices.Add(BorderDev);
+            _spectrumDevices.Add(InterruptDev);
+
+            _frameBoundDevices = _spectrumDevices.OfType<IFrameBound>().ToList();
+            _cpuBoundDevices = _spectrumDevices.OfType<ICpuBound>().ToList();
+
+            BorderDev.OnAttached(this);
+            InterruptDev.OnAttached(this);
+
+            // Attach all providers to this spectrum
+            Clock?.OnAttached(this);
         }
+
+        #endregion
+
+        #region IFrameBound
+
+        /// <summary>
+        /// Allows the class to react to the start of a new frame
+        /// </summary>
+        public void OnNewFrame()
+        {
+            foreach (var dev in _frameBoundDevices)
+            {
+                dev.OnNewFrame();
+            }
+        }
+
+        /// <summary>
+        /// Allows the class to react to the completion of a frame
+        /// </summary>
+        public void OnFrameCompleted()
+        {
+            foreach (var dev in _frameBoundDevices)
+            {
+                dev.OverFlowTStates = OverFlowTStates;
+                dev.OnFrameCompleted();
+            }
+        }
+
+        public event EventHandler FrameCompleted;
 
         #endregion
 
@@ -165,6 +222,30 @@ namespace AsniZX.ZXSpectrum.Hardware.Machines
         public void ExecuteCycle()
         {
 
+        }
+
+        #endregion
+
+        #region IFrameBound
+
+
+
+        #endregion
+
+        #region IDevice
+
+        /// <summary>
+        /// Resets ULA and CPU chips
+        /// </summary>
+        public void Reset()
+        {
+            Cpu.SetResetSignal();
+            //resetulatact
+            FrameCount = 0;
+            OverflowTStates = 0;
+            _frameCompleted = true;
+            foreach (var dev in _spectrumDevices)
+                dev.Reset();
         }
 
         #endregion
