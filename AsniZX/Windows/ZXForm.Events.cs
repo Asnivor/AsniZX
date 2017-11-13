@@ -18,17 +18,14 @@ namespace AsniZX
         /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _rendererRunning = false;
-            _renderThread?.Abort();
-            Speccy.EmulationThread?.Abort();
+            EmuMachine?.Stop();
             Application.Exit();
         }
 
         private void ZXForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _rendererRunning = false;
-            _renderThread?.Abort();
-            Speccy.EmulationThread?.Abort();
+            // Speccy.EmulationThread?.Abort();
+            EmuMachine?.Stop();
         }
 
         /*
@@ -65,9 +62,10 @@ namespace AsniZX
         }
 
 
-
-
-
+        private void togglePauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TogglePause();
+        }
 
         /// <summary>
         /// On form load
@@ -77,33 +75,6 @@ namespace AsniZX
         private void ZXForm_Load(object sender, EventArgs e)
         {
             TestStart();
-
-			/*
-            // initialise the display manager
-            dm = new SubSystem.Display.DisplayManager(d3DControl);
-
-            
-            // disable default directx alt-enter (apparently doesnt work properly with winforms)
-            using (var factory = d3DControl.SwapChain.GetParent<Factory>())
-            {
-                factory.SetWindowAssociation(this.Handle, WindowAssociationFlags.IgnoreAltEnter);
-            }
-			*/
-            
-			/*
-            // setup custom fullscreen handler
-            this.KeyDown += (o, e1) =>
-            {
-                if (e1.KeyCode == Keys.Enter)
-                {
-                    ToggleFullscreen();
-                    //d3DControl.SwapChain.IsFullScreen = !d3DControl.SwapChain.IsFullScreen;
-                }
-                    
-            };
-			*/
-
-            var t = new FakeTick();
         }
 
 		/// <summary>
@@ -113,19 +84,12 @@ namespace AsniZX
         /// <param name="e"></param>
         private void ZXForm_ResizeEnd(object sender, EventArgs e)
         {
-            /*
-            WindowSize[0] = this.Width;
-            WindowSize[1] = this.Height;
-            SetRenderer((IRenderer)Activator.CreateInstance(typeof(D3DRenderer)));
-            
-			*/
-
-            UnPause();
+            EmuMachine.UnPause();
         }
 
         private void ZXForm_ResizeBegin(object sender, EventArgs e)
         {
-            Pause();
+            EmuMachine.Pause();
         }
 
 
@@ -152,11 +116,6 @@ namespace AsniZX
 
         private void ZXForm_Resize(object sender, EventArgs e)
         {
-            //_rendererRunning = false;
-            //_renderThread?.Abort();
-            //WindowSize[0] = this.Width;
-			//WindowSize[1] = this.Height;
-            //SetRenderer((IRenderer)Activator.CreateInstance(typeof(D3DRenderer)));
         }
 
 		/// <summary>
@@ -168,6 +127,26 @@ namespace AsniZX
         {
             ToggleFullscreen();
             ZXForm_ResizeEnd(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// hard reset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void terminateEmulationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EmuMachine.Spectrum.Reset();
+        }
+
+        /// <summary>
+        /// soft reset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void softResetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EmuMachine.Spectrum.Reset();
         }
     }
 }

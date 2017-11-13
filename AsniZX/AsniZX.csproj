@@ -81,62 +81,60 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Exceptions.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\FlagSetMask.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\FlagsResetMask.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\BranchEvent.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\IBranchDebugSupport.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\IClockBoundDevice.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\IStackDebugSupport.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\IZ80Cpu.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\IZ80CpuTestSupport.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\StackContentManipulationEvent.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Ported\StackPointerManipulationEvent.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Reg16Index.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Reg8Index.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\RegisterAddressException.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Registers.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80AluHelpers.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80BitOperations.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80Cpu.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80Debug.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80EventArgs.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80ExtendedOperations.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80IndexedBitOperations.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80IndexedOperations.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80OpCodeHelpers.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80OperationCodeEventArgs.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80Operations.cs" />
+    <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Z80StateFlags.cs" />
+    <Compile Include="Emulation\Hardware\Display\BorderBase.cs" />
+    <Compile Include="Emulation\Hardware\Display\BorderType.cs" />
+    <Compile Include="Emulation\Hardware\Display\RenderingTState.cs" />
+    <Compile Include="Emulation\Hardware\Display\ScreenBase.cs" />
+    <Compile Include="Emulation\Hardware\Display\ScreenConfig.cs" />
+    <Compile Include="Emulation\Hardware\Display\ScreenRenderingPhase.cs" />
+    <Compile Include="Emulation\Hardware\IO\InterruptBase.cs" />
+    <Compile Include="Emulation\Hardware\IO\PortDeviceBase.cs" />
+    <Compile Include="Emulation\Hardware\Machine\Rom.cs" />
+    <Compile Include="Emulation\Hardware\Machine\MachineType.cs" />
+    <Compile Include="Emulation\Hardware\Machine\ZXBase.cs" />
+    <Compile Include="Emulation\Hardware\Machine\ZXSpectrum48.cs" />
+    <Compile Include="Emulation\Hardware\Memory\MemoryDeviceBase.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\ICpuOperationBoundDevice.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IDevice.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IFrameBoundDevice.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IMemoryDevice.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IPortDevice.cs" />
+    <Compile Include="Emulation\EmulationMachine.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IProvider.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IZXBoundDevice.cs" />
     <Compile Include="Extensions\Utility.cs" />
-    <Compile Include="FakeTick.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Spectrum\Emulator.cs" />
+    <Compile Include="SubSystem\Clock\ClockProvider.cs" />
     <Compile Include="SubSystem\Sound\SoundHandler.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\ICpuBound.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IFrameBound.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IProvider.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\ISpectrumAttachable.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IBorder.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IInterrupt.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\IScreen.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\ISpeccyModel.cs" />
-    <Compile Include="ZXSpectrum\Abstraction\ISpectrum.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IClockBoundDevice.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IDevice.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IMemoryDevice.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IPortDevice.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IZ80Cpu.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Devices\IZ80CpuTestSupport.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\BranchEvent.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\IBranchDebugSupport.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\IStackDebugSupport.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\StackContentManipulationEvent.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Discovery\StackPointerManipulationEvent.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Abstraction\Providers\IClockProvider.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Exceptions.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\FlagSetMask.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\FlagsResetMask.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Reg16Index.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Reg8Index.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\RegisterAddressException.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Registers.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80AluHelpers.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80BitOperations.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Cpu.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Debug.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80EventArgs.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80ExtendedOperations.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80IndexedBitOperations.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80IndexedOperations.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80OpCodeHelpers.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80OperationCodeEventArgs.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80Operations.cs" />
-    <Compile Include="ZXSpectrum\Hardware\CPU\Z80StateFlags.cs" />
-    <Compile Include="ZXSpectrum\Hardware\Display\Border.cs" />
-    <Compile Include="ZXSpectrum\Hardware\IO\Interrupt.cs" />
-    <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KMemory.cs" />
-    <Compile Include="ZXSpectrum\Hardware\IO\ZXSpectrum48KPort.cs" />
-    <Compile Include="ZXSpectrum\Hardware\Machines\SpectrumBase.cs" />
-    <Compile Include="ZXSpectrum\Hardware\Machines\ZXSpectrum48K.cs" />
-    <Compile Include="ZXSpectrum\Machine.cs" />
-    <Compile Include="ZXSpectrum\Models\Models.cs" />
     <Compile Include="SubSystem\Display\DisplayHandler.cs" />
-    <Compile Include="SubSystem\Display\DisplaySurface.cs" />
     <Compile Include="SubSystem\Display\Enums.cs" />
     <Compile Include="SubSystem\Display\FrameData.cs" />
     <Compile Include="SubSystem\Display\IRenderer.cs" />
@@ -155,13 +153,6 @@
     <Compile Include="Windows\ZXForm.KeyInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ZXSpectrum\Hardware\Machines\_48K.cs" />
-    <Compile Include="ZXSpectrum\Providers\ClockProvider.cs" />
-    <Compile Include="ZXSpectrum\Settings\Globals.cs" />
-    <Compile Include="ZXSpectrum\Settings\SpectrumType.cs" />
-    <Compile Include="ZXSpectrum\Spectrum.cs" />
-    <Compile Include="ZXSpectrum\Spectrum.IMemoryDomains.cs" />
-    <Compile Include="ZXSpectrum\Hardware\Display\ULA.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -174,6 +165,7 @@
     <EmbeddedResource Include="Windows\ZXForm.resx">
       <DependentUpon>ZXForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Emulation\Hardware\CPU\SpectnetideZ80\readme.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -187,36 +179,43 @@
     <Compile Include="Windows\ZXForm.Events.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ZXSpectrum\Spectrum.IDebuggable.cs" />
-    <Compile Include="ZXSpectrum\Spectrum.IEmulator.cs" />
-    <Compile Include="ZXSpectrum\Spectrum.IInputPollable.cs" />
-    <Compile Include="ZXSpectrum\Spectrum.IStatable.cs" />
-    <None Include="ROMs\128.ROM" />
-    <None Include="ROMs\48.ROM" />
-    <None Include="ROMs\gdos-pd.rom" />
-    <None Include="ROMs\gdos.rom" />
-    <None Include="ROMs\if1.rom" />
-    <None Include="ROMs\pentagon.rom" />
-    <None Include="ROMs\plus2.rom" />
-    <None Include="ROMs\plus3.rom" />
-    <None Include="ROMs\scorpion.rom" />
-    <None Include="ROMs\trdos.rom" />
-    <None Include="ZXSpectrum\Hardware\CPU\readme.md" />
+    <None Include="ROMs\128.ROM">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\48.ROM">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\gdos-pd.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\gdos.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\if1.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\pentagon.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\plus2.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\plus3.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\scorpion.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ROMs\trdos.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="ZXSpectrum\Hardware\Peripherals\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BizHawk.Z80A\BizHawk.Z80A.csproj">
-      <Project>{d28ebea4-9397-4a12-9ed3-df76cf328eaf}</Project>
-      <Name>BizHawk.Z80A</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ZXSpectrum\Hardware\CPU\license.txt" />
+    <Content Include="Emulation\Hardware\CPU\SpectnetideZ80\license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

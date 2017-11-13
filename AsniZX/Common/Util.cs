@@ -8,6 +8,7 @@ namespace AsniZX.Common
 {
     public static unsafe partial class Util
     {
+        
         public static void Memset(void* ptr, int val, int len)
         {
             var bptr = (byte*)ptr;
@@ -16,5 +17,6 @@ namespace AsniZX.Common
                 bptr[i] = (byte)val;
             }
         }
+        
     }
 }

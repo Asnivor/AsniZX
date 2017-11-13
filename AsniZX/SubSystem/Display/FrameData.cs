@@ -11,5 +11,6 @@ namespace AsniZX.SubSystem.Display
         public int Width { get; set; }
         public int Height { get; set; }
         public uint[] Buffer { get; set; }
+        public byte[] BufferBytes { get; set; }
     }
 }

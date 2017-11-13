@@ -8,17 +8,6 @@ using System.Threading;
 using System.Windows.Forms;
 
 using AsniZX.SubSystem.Display;
-using AsniZX.Spectrum;
-using AsniZX.ZXSpectrum;
-
-//using SlimDX;
-//using SlimDX.D3DCompiler;
-//using SlimDX.Direct3D11;
-//using SlimDX.DXGI;
-//using Buffer = SlimDX.Direct3D11.Buffer;
-//using Device = SlimDX.Direct3D11.Device;
-
-//using SlimDX.Windows;
 
 namespace AsniZX
 {
@@ -28,7 +17,9 @@ namespace AsniZX
 
         public DisplayHandler displayHandler { get; set; }
 
-        public ZXSpectrum.Spectrum Speccy { get; set; }
+        public Emulation.EmulationMachine EmuMachine { get; set; }
+
+        public bool IsFullScreen { get; set; }
 
         /// <summary>
         /// Current frames-per-second calculation
@@ -41,14 +32,7 @@ namespace AsniZX
         public bool AppFullscreen { get; set; }
         public Point WindowPosition { get; set; }
         public int[] WindowSize { get; set; }
-        
 
-        private bool _rendererRunning = true;
-        private Thread _renderThread;
-
-        //public const int GameWidth = 256; // + 48 + 48;
-        //public const int GameHeight = 192; // + 48 + 48;
-        //public uint[] rawBitmap = new uint[GameWidth * GameHeight];
         public bool ready;
         public IRenderer _renderer;
 
@@ -56,16 +40,11 @@ namespace AsniZX
 
 
         private int[] speeds = { 1, 2, 4, 8, 16 };
-        private int activeSpeed = 1;
         private string[] sizes = { "1x", "2x", "4x", "8x" };
-        private string activeSize = "2x";
         
-        private bool suspended;
         public bool gameStarted;
 
         public bool isPaused { get; set; }
-
-        private Emulator emu;
 
         public ZXForm()
         {
@@ -84,17 +63,32 @@ namespace AsniZX
             WindowSize[1] = this.Height;
 
             isPaused = false;
+            
+            togglePauseToolStripMenuItem.Text = "Pause (F11)";
 
             gameStarted = true;
+
+            IsFullScreen = false;
+
+
 
             
 
             //SetRenderer((IRenderer)Activator.CreateInstance(typeof(D3DRenderer)));    
         }
 
+        /// <summary>
+        /// sets actual FPS
+        /// </summary>
+        /// <param name="val"></param>
         public void SetFPS(int val)
         {
-            toolStripStatusLabel1.Text = val + " FPS";
+            toolStripStatusLabel1.Text = "Actual FPS: " + val;
+        }
+
+        public void SetVirtualFPS(int val)
+        {
+            toolStripStatusLabel2.Text = "Virtual Speed: " + val;
         }
 
         /*
@@ -121,45 +115,38 @@ namespace AsniZX
 
         public void Pause()
         {
-            //suspended = true;
-            //Speccy.PauseEmulation();
-            Speccy.IsEmulationPaused = true;
+            togglePauseToolStripMenuItem.Text = "UnPause (F11)";
         }
 
         public void UnPause()
         {
-            //suspended = false;
-            //Speccy.ResumeEmulation();
-            Speccy.IsEmulationPaused = false;
+            togglePauseToolStripMenuItem.Text = "Pause (F11)";
         }
 
         public void TogglePause()
         {
-            if (Speccy.IsEmulationPaused)
-                Speccy.IsEmulationPaused = false;
-            else
-                Speccy.IsEmulationPaused = true;
-            /*
-            if (suspended == true)
+            if (EmuMachine.IsSuspended == true)
             {
-                suspended = false;
-                Speccy.ResumeEmulation();
+                EmuMachine.UnPause();
             }
                 
             else
             {
-                suspended = true;
-                Speccy.PauseEmulation();
+                EmuMachine.Pause();
             }
-                
-               */
+             
         }
 
         private void TestStart()
         {
+            /*
             Speccy = new ZXSpectrum.Spectrum(SpecModel._48k);
             Speccy.StartEmulation();
+            */
 
+
+            EmuMachine = new Emulation.EmulationMachine();
+            EmuMachine.Start();
 
             /*
             emu = new Emulator();
@@ -207,12 +194,14 @@ namespace AsniZX
             {
                 // we are currently fullscreen
                 GoWindowed();
+                IsFullScreen = false;
                 return;
             }
             if (!AppFullscreen)
             {
                 // we are currently windowed
                 GoFullScreen();
+                IsFullScreen = true;
                 return;
             }
         }
@@ -261,7 +250,7 @@ namespace AsniZX
 
             this.Location = WindowPosition;
             this.Width = WindowSize[0];
-            this.Height = WindowSize[1];
+            this.Height = WindowSize[1] + statusStrip1.Height + MainMenuStrip.Height;
 
             this.ResumeLayout();
         }
@@ -275,6 +264,16 @@ namespace AsniZX
             displayHandler.magnification = magnification;
             this.Width = displayHandler.inputWidth * magnification;
             this.Height = (displayHandler.inputHeight + statusStrip1.Height + MainMenuStrip.Height) * magnification;
+            displayHandler.Init();
         }
+
+        private void toolStripStatusLabel2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
+        
     }
 }

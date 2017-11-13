@@ -44,7 +44,7 @@ namespace AsniZX.SubSystem.Display
                     return;
 
                 _form = dh.Form;
-                ResizeRedraw = false;
+                ResizeRedraw = true;
 
                 
                 //clientArea = SetClientAreaSize(ClientSize.Width, ClientSize.Height);
@@ -82,17 +82,38 @@ namespace AsniZX.SubSystem.Display
 
                 var bitmapProperties = new BitmapProperties(new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Ignore));
 
-                gameBitmap = new Bitmap(d2dRenderTarget, new Size2(256, 192), bitmapProperties);
-                if (framedatabuffer != null)
-                    gameBitmap = new Bitmap(d2dRenderTarget, new Size2(framedatabuffer.Width, framedatabuffer.Height), bitmapProperties);
+                //d2dRenderTarget.Transform = Matrix3x2.Scaling(0.8f);
 
-                // client area - maintain 4:3
+                int w;
+                int h;
+
+                gameBitmap = new Bitmap(d2dRenderTarget, new Size2(dh.inputWidth, dh.inputHeight), bitmapProperties);
+                if (framedatabuffer != null)
+                {
+                    gameBitmap = new Bitmap(d2dRenderTarget, new Size2(framedatabuffer.Width, framedatabuffer.Height), bitmapProperties);
+                    w = framedatabuffer.Width;
+                    h = framedatabuffer.Height;
+                }
+                else
+                {
+                    w = dh.inputWidth;
+                    h = dh.inputHeight;
+                }
+
+                float scaleFactor = 1f;
+
+                //d2dRenderTarget.Transform = ScaleRT(w, h, scaleFactor);
+
+                float yOff = -((h * scaleFactor) - h);
+                float xOff = -((w * scaleFactor) - w);
+
+                // client area - maintain aspect ratio during fullscreen
                 int padL = 0;
                 int padT = 0;
                 int padB = 0;
                 int padR = 0;
-
-                if (framedatabuffer != null)
+                
+                if (framedatabuffer != null && ZXForm.MainForm.AppFullscreen == true)
                 {
                     float scaleX = ((float)ClientSize.Width / (float)(framedatabuffer.Width));
                     float scaleY = ((float)ClientSize.Height / (float)(framedatabuffer.Height));
@@ -124,6 +145,7 @@ namespace AsniZX.SubSystem.Display
                     if (scaleY < 1.0f)
                         scaleY = 1.0f;
                 }
+                
                 clientArea = new RawRectangleF
                 {
                     Left = padL,
@@ -138,6 +160,15 @@ namespace AsniZX.SubSystem.Display
                 backBuffer.Dispose();
                 _form.ready = true;
             }
+        }
+
+        private RawMatrix3x2 ScaleRT(int width, int height, float scaleFactor)
+        {
+            float yOff = -((height * scaleFactor) - height);
+            float xOff = -((width * scaleFactor) - width);
+            
+            var trans = Matrix3x2.Transformation(scaleFactor, scaleFactor, 0f, xOff, yOff);
+            return trans;
         }
 
         /// <summary>
@@ -155,14 +186,14 @@ namespace AsniZX.SubSystem.Display
             {
                 if (_form == null || d2dRenderTarget == null || !_form.ready || d2dRenderTarget.IsDisposed) return;
                 d2dRenderTarget.BeginDraw();
-                d2dRenderTarget.Clear(Color.Black);
+                d2dRenderTarget.Clear(Color.White);
 
                 if (_form.gameStarted)
                 {
                     int stride = fd.Width * 4;
                     gameBitmap.CopyFromMemory(fd.Buffer, stride);
 
-                    
+                    //d2dRenderTarget.Transform = ScaleRT(fd.Width, fd.Height, 1.2f);
 
                     d2dRenderTarget.DrawBitmap(gameBitmap, clientArea, 1f,
                         _form._filterMode == 

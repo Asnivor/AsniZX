@@ -40,8 +40,13 @@
             this.x4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x51280x960ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x61536x1152ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.controlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.togglePauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.terminateEmulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.softResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +55,8 @@
             // 
             this.MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.controlToolStripMenuItem});
             this.MainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip.Name = "MainMenuStrip";
             this.MainMenuStrip.Size = new System.Drawing.Size(623, 24);
@@ -143,10 +149,35 @@
             this.x61536x1152ToolStripMenuItem.Text = "x6 (1536x1152)";
             this.x61536x1152ToolStripMenuItem.Click += new System.EventHandler(this.x61536x1152ToolStripMenuItem_Click);
             // 
+            // controlToolStripMenuItem
+            // 
+            this.controlToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.togglePauseToolStripMenuItem,
+            this.terminateEmulationToolStripMenuItem,
+            this.softResetToolStripMenuItem});
+            this.controlToolStripMenuItem.Name = "controlToolStripMenuItem";
+            this.controlToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.controlToolStripMenuItem.Text = "Control";
+            // 
+            // togglePauseToolStripMenuItem
+            // 
+            this.togglePauseToolStripMenuItem.Name = "togglePauseToolStripMenuItem";
+            this.togglePauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.togglePauseToolStripMenuItem.Text = "Toggle Pause";
+            this.togglePauseToolStripMenuItem.Click += new System.EventHandler(this.togglePauseToolStripMenuItem_Click);
+            // 
+            // terminateEmulationToolStripMenuItem
+            // 
+            this.terminateEmulationToolStripMenuItem.Name = "terminateEmulationToolStripMenuItem";
+            this.terminateEmulationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.terminateEmulationToolStripMenuItem.Text = "Hard Reset";
+            this.terminateEmulationToolStripMenuItem.Click += new System.EventHandler(this.terminateEmulationToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 496);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(623, 22);
@@ -155,9 +186,25 @@
             // 
             // toolStripStatusLabel1
             // 
+            this.toolStripStatusLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
+            // 
+            // softResetToolStripMenuItem
+            // 
+            this.softResetToolStripMenuItem.Name = "softResetToolStripMenuItem";
+            this.softResetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.softResetToolStripMenuItem.Text = "Soft Reset";
+            this.softResetToolStripMenuItem.Click += new System.EventHandler(this.softResetToolStripMenuItem_Click);
             // 
             // ZXForm
             // 
@@ -202,5 +249,10 @@
         private System.Windows.Forms.ToolStripMenuItem x51280x960ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x61536x1152ToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripMenuItem controlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem togglePauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem terminateEmulationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem softResetToolStripMenuItem;
     }
 }

@@ -22,13 +22,13 @@ namespace AsniZX.SubSystem.Display
         /// <summary>
         /// 
         /// </summary>
-        IRenderer _renderer;
+        public IRenderer _renderer;
 
         /// <summary>
         /// Dimensions of the frame coming from the emulator
         /// </summary>
-        public int inputWidth = 256;
-        public int inputHeight = 192;
+        public int inputWidth = 352; //256;
+        public int inputHeight = 288; // 192;
 
         /// <summary>
         /// Dimensions of the display surface that we are writing to
@@ -52,14 +52,9 @@ namespace AsniZX.SubSystem.Display
             Init();
         }
 
-        private void Init()
+        public void Init()
         {
             SetRenderer((IRenderer)Activator.CreateInstance(typeof(SharpDXRenderer)));
-        }
-
-        public void StartRenderingThread()
-        {
-
         }
 
         public void UpdateDisplay(FrameData frameData)
