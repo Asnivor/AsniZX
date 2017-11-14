@@ -109,10 +109,16 @@ namespace AsniZX.Emulation.Hardware.Memory
         /// </summary>
         public virtual void Reset()
         {
-            for (var i = 0; i < _memory.Length; i++)
+            Random rnd = new Random();
+            lock (_screenDevice)
             {
-                OnWriteMemory((ushort)i, 0xFF);
+                for (var i = 0; i < _memory.Length; i++)
+                {
+                    //OnWriteMemory((ushort)i, 0xFF);
+                    //_memory[i] = (byte)rnd.Next(byte.MaxValue);
+                }
             }
+            
         }
 
         #endregion

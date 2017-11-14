@@ -25,7 +25,7 @@ namespace AsniZX.Emulation.Interfaces
         /// <remarks>
         /// Disables interrupts from being accepted 
         /// </remarks>
-        bool IFF1 { get; }
+        bool IFF1 { get; set; }
 
         /// <summary>
         /// Interrupt Enable Flip-Flop #2
@@ -33,7 +33,7 @@ namespace AsniZX.Emulation.Interfaces
         /// <remarks>
         /// Temporary storage location for IFF1
         /// </remarks>
-        bool IFF2 { get; }
+        bool IFF2 { get; set; }
 
         /// <summary>
         /// The current Interrupt mode

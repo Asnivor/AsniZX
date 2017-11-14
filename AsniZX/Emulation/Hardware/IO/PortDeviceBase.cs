@@ -1,4 +1,5 @@
 ﻿using AsniZX.Emulation.Hardware.Display;
+using AsniZX.Emulation.Hardware.Keyboard;
 using AsniZX.Emulation.Hardware.Machine;
 using AsniZX.Emulation.Interfaces;
 using System;
@@ -17,6 +18,7 @@ namespace AsniZX.Emulation.Hardware.IO
         protected IZ80Cpu _cpu { get; set; }
 
         protected BorderBase _borderDevice;
+        protected KeyboardBase _keyboardDevice;
         //protected IBeeperDevice _beeperDevice;
         //protected IKeyboardDevice _keyboardDevice;
         //protected ITapeDevice _tapeDevice;
@@ -59,7 +61,7 @@ namespace AsniZX.Emulation.Hardware.IO
             _cpu = hostZX.Cpu;
             _borderDevice = hostZX.BorderDevice;
             //_beeperDevice = hostVm.BeeperDevice;
-            //_keyboardDevice = hostVm.KeyboardDevice;
+            _keyboardDevice = hostZX.KeyboardDevice;
             //_tapeDevice = hostVm.TapeDevice;
         }
 

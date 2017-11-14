@@ -30,6 +30,7 @@
         {
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSnapshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleFullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,10 +44,10 @@
             this.controlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.togglePauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.terminateEmulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.softResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.softResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -66,15 +67,23 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadSnapshotToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // loadSnapshotToolStripMenuItem
+            // 
+            this.loadSnapshotToolStripMenuItem.Name = "loadSnapshotToolStripMenuItem";
+            this.loadSnapshotToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadSnapshotToolStripMenuItem.Text = "Load Snapshot";
+            this.loadSnapshotToolStripMenuItem.Click += new System.EventHandler(this.loadSnapshotToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -162,16 +171,23 @@
             // togglePauseToolStripMenuItem
             // 
             this.togglePauseToolStripMenuItem.Name = "togglePauseToolStripMenuItem";
-            this.togglePauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.togglePauseToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.togglePauseToolStripMenuItem.Text = "Toggle Pause";
             this.togglePauseToolStripMenuItem.Click += new System.EventHandler(this.togglePauseToolStripMenuItem_Click);
             // 
             // terminateEmulationToolStripMenuItem
             // 
             this.terminateEmulationToolStripMenuItem.Name = "terminateEmulationToolStripMenuItem";
-            this.terminateEmulationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.terminateEmulationToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.terminateEmulationToolStripMenuItem.Text = "Hard Reset";
             this.terminateEmulationToolStripMenuItem.Click += new System.EventHandler(this.terminateEmulationToolStripMenuItem_Click);
+            // 
+            // softResetToolStripMenuItem
+            // 
+            this.softResetToolStripMenuItem.Name = "softResetToolStripMenuItem";
+            this.softResetToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.softResetToolStripMenuItem.Text = "Soft Reset";
+            this.softResetToolStripMenuItem.Click += new System.EventHandler(this.softResetToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -199,13 +215,6 @@
             this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Click += new System.EventHandler(this.toolStripStatusLabel2_Click);
             // 
-            // softResetToolStripMenuItem
-            // 
-            this.softResetToolStripMenuItem.Name = "softResetToolStripMenuItem";
-            this.softResetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.softResetToolStripMenuItem.Text = "Soft Reset";
-            this.softResetToolStripMenuItem.Click += new System.EventHandler(this.softResetToolStripMenuItem_Click);
-            // 
             // ZXForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +232,7 @@
             this.ResizeBegin += new System.EventHandler(this.ZXForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.ZXForm_ResizeEnd);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ZXForm_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ZXForm_KeyUp);
             this.Resize += new System.EventHandler(this.ZXForm_Resize);
             this.MainMenuStrip.ResumeLayout(false);
             this.MainMenuStrip.PerformLayout();
@@ -254,5 +264,6 @@
         private System.Windows.Forms.ToolStripMenuItem togglePauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem terminateEmulationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem softResetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadSnapshotToolStripMenuItem;
     }
 }

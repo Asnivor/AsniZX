@@ -14,40 +14,44 @@ namespace AsniZX
             e.Handled = ProcessKeyDown(e.KeyCode);
         }
 
+        private void ZXForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            e.Handled = ProcessKeyUp(e.KeyCode);
+        }
+
         private bool ProcessKeyDown(Keys keyCode)
         {
+            // Keydown events for non-emulator (i.e. UI) keypresses
             switch (keyCode)
             {
                 case Keys.F12:
                     ToggleFullscreen();
                     ZXForm_ResizeEnd(this, EventArgs.Empty);
                     return true;
-
                 case Keys.F11:
                     TogglePause();
-                    return true;
-
-                case Keys.Up:
-                    {
-                        // act on up arrow
-                        return true;
-                    }
-                case Keys.Down:
-                    {
-                        // act on down arrow
-                        return true;
-                    }
-                case Keys.Left:
-                    {
-                        // act on left arrow
-                        return true;
-                    }
-                case Keys.Right:
-                    {
-                        // act on right arrow
-                        return true;
-                    }
+                    return true;               
             }
+
+
+
+
+            return false;
+        }
+
+        private bool ProcessKeyUp(Keys keyCode)
+        {
+            // Keyup events for non-emulator (i.e. UI) keypresses
+            switch (keyCode)
+            {
+                case Keys.F12:
+                case Keys.F11:
+                    return true;
+            }
+
+
+
+
             return false;
         }
     }

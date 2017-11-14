@@ -10,6 +10,8 @@ using System.Threading;
 using AsniZX.Emulation.Hardware.IO;
 using AsniZX.Emulation.Hardware.Display;
 using AsniZX.SubSystem.Display;
+using AsniZX.Emulation.Hardware.Keyboard;
+using AsniZX.SubSystem.Input;
 
 namespace AsniZX.Emulation.Hardware.Machine
 {
@@ -20,6 +22,8 @@ namespace AsniZX.Emulation.Hardware.Machine
     {
         protected  int _tStatesPerFrame;
         protected bool _frameCompleted;
+
+        public System.Object lockThis = new System.Object();
 
         protected  List<IDevice> _spectrumDevices = new List<IDevice>();
         protected  List<IFrameBoundDevice> _frameBoundDevices = new List<IFrameBoundDevice>();
@@ -102,6 +106,11 @@ namespace AsniZX.Emulation.Hardware.Machine
         public ScreenBase ScreenDevice { get; set; }
 
         /// <summary>
+        /// The virtual keyboard device
+        /// </summary>
+        public KeyboardBase KeyboardDevice { get; set; }
+
+        /// <summary>
         /// Does the actual rendering to the form handle
         /// </summary>
         public DisplayHandler DHandler { get; set; }
@@ -157,7 +166,7 @@ namespace AsniZX.Emulation.Hardware.Machine
         /// </summary>
         public virtual bool ExecuteCycle(CancellationToken token)
         {  
-            // calculate lag time at the end of the frame
+            // used calculate lag time at the end of the frame
             var cycleStartTime = Clock.GetCounter();
             var cycleFrameCount = 0;
 
@@ -170,23 +179,7 @@ namespace AsniZX.Emulation.Hardware.Machine
                 _Machine._pauseEvent.WaitOne(Timeout.Infinite);
                 if (_Machine._shutdownEvent.WaitOne(0))
                     break;
-
-                /*
-                // handle pausing
-                if (_Machine.IsPaused)
-                {                    
-                    Thread.Sleep(200);
-                    // get start of this frame
-                    var thisFrameStartTime = Clock.GetCounter();
-                    // get end of last frame
-                    var endOfLastFrame = (cycleStartTime + cycleFrameCount * PhysicalFrameClockCount) + PhysicalFrameClockCount;
-                    // increment totalLagTime by the amount we paused
-                    //cycleStartTime += thisFrameStartTime - (long)endOfLastFrame;
-                    totalLagTime += (long)thisFrameStartTime - (long)endOfLastFrame;
-                    continue; 
-                }
-                */
-
+                
 
                 if (_frameCompleted)
                 {
@@ -212,8 +205,6 @@ namespace AsniZX.Emulation.Hardware.Machine
                         // --- current instruction completes
                         RunsInMaskableInterrupt = false;
                     }
-
-
 
                     // check for interrupt signal generation
                     InterruptDevice.CheckForInterrupt(CurrentFrameTState);
@@ -244,23 +235,27 @@ namespace AsniZX.Emulation.Hardware.Machine
                 // Notify device about frame completion
                 OnFrameCompleted();
 
-                var freq = Clock.GetFrequency();
+                //var freq = Clock.GetFrequency();
 
 
-                var maxfps = freq / (Clock.GetCounter() - (cycleStartTime + totalLagTime + (cycleFrameCount - 1) * PhysicalFrameClockCount));// * 1000;                
+                //var maxfps = freq / (Clock.GetCounter() - (cycleStartTime + totalLagTime + (cycleFrameCount - 1) * PhysicalFrameClockCount));// * 1000;       
+
+                // check for keyboard input
+                KeyboardDevice.ProcessKeyboardInput();
+                
 
                 // Introduce some lag so that the frame execution time is accurate
                 var nextFrameCounter = cycleStartTime + totalLagTime + (cycleFrameCount * PhysicalFrameClockCount);
                 Clock.WaitUntil((long)nextFrameCounter, token);
 
-                var actualfps = freq / ((nextFrameCounter) - (cycleStartTime + totalLagTime + (cycleFrameCount - 1) * PhysicalFrameClockCount));
+                //var actualfps = freq / ((nextFrameCounter) - (cycleStartTime + totalLagTime + (cycleFrameCount - 1) * PhysicalFrameClockCount));
 
                 // calculate frames per second
 
-                var frameTimeInClockCounts = cycleFrameCount * PhysicalFrameClockCount;
+                //var frameTimeInClockCounts = cycleFrameCount * PhysicalFrameClockCount;
 
-                _Machine.MainForm?.SetFPS((int)actualfps);
-                _Machine.MainForm?.SetVirtualFPS((int)maxfps);
+                //_Machine.MainForm?.SetFPS((int)actualfps);
+                //_Machine.MainForm?.SetVirtualFPS((int)maxfps);
 
                 // New frame starts
                 OverFlowTStates = CurrentFrameTState % TStatesPerFrame; //_tStatesPerFrame;

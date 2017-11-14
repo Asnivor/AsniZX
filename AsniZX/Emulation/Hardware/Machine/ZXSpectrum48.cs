@@ -1,6 +1,7 @@
 ﻿using AsniZX.Emulation.Hardware.CPU.SpectnetideZ80;
 using AsniZX.Emulation.Hardware.Display;
 using AsniZX.Emulation.Hardware.IO;
+using AsniZX.Emulation.Hardware.Keyboard;
 using AsniZX.Emulation.Hardware.Memory;
 using AsniZX.Emulation.Interfaces;
 using AsniZX.SubSystem.Display;
@@ -104,6 +105,7 @@ namespace AsniZX.Emulation.Hardware.Machine
             InterruptDevice = new Interrupt(InterruptTState);
             BorderDevice = new Border();
             ScreenDevice = new Screen();
+            KeyboardDevice = new Keyboard();
 
             // attach devices
             _spectrumDevices.Add(MemoryDevice);
@@ -111,6 +113,7 @@ namespace AsniZX.Emulation.Hardware.Machine
             _spectrumDevices.Add(InterruptDevice);
             _spectrumDevices.Add(BorderDevice);
             _spectrumDevices.Add(ScreenDevice);
+            _spectrumDevices.Add(KeyboardDevice);
 
             // setup devices
             MemoryDevice.OnAttached(this);
@@ -118,6 +121,7 @@ namespace AsniZX.Emulation.Hardware.Machine
             InterruptDevice.OnAttached(this);
             BorderDevice.OnAttached(this);
             ScreenDevice.OnAttached(this);
+            KeyboardDevice.OnAttached(this);
 
             // frame calculations
             ResetUlaTState();
@@ -129,9 +133,7 @@ namespace AsniZX.Emulation.Hardware.Machine
             RunsInMaskableInterrupt = false;
 
             _frameBoundDevices = _spectrumDevices.OfType<IFrameBoundDevice>().ToList();
-            _cpuBoundDevices = _spectrumDevices.OfType<ICpuOperationBoundDevice>().ToList();
-
-                  
+            _cpuBoundDevices = _spectrumDevices.OfType<ICpuOperationBoundDevice>().ToList();                  
 
             // load ROM
             Rom.LoadRom(MachineType.ZXSpectrum48, MemoryDevice);
@@ -226,6 +228,16 @@ namespace AsniZX.Emulation.Hardware.Machine
                 if ((addr & 0x0001) != 0)
                     return 0xFF;
 
+                // keyboard input   
+                var pBits = _keyboardDevice.ReadKeyboardByte(addr);
+
+                // no ear yet
+                //pBits = (byte)(pBits & 0b1011_1111);
+
+                return pBits;
+
+                
+
                 /*The lowest three bits specify the border colour; a zero in bit 3 activates the MIC output, 
                  * whilst a one in bit 4 activates the EAR output and the internal speaker. 
                  * However, the EAR and MIC sockets are connected only by resistors, so activating one activates the other; 
@@ -274,7 +286,6 @@ namespace AsniZX.Emulation.Hardware.Machine
         /// </summary>
         public class Interrupt : InterruptBase
         {
-
             public Interrupt(int interruptTState) 
                 : base(interruptTState)
             {
@@ -325,6 +336,112 @@ namespace AsniZX.Emulation.Hardware.Machine
 
                 _screenWidth = hostZX.ScreenDevice.ScreenConfiguration.ScreenWidth;
                 _pixelBuffer = new byte[_screenWidth * hostZX.ScreenDevice.ScreenConfiguration.ScreenLines];
+            }
+        }
+
+        /// <summary>
+        /// Represents the ULA screen
+        /// </summary>
+        public class Keyboard : KeyboardBase
+        {
+            public Keyboard()
+            {
+                KeyMapping = new ZXSpectrum48_Keys(this);
+            }
+
+            public override byte ReadKeyboardByte(ushort addr)
+            {
+                return ((ZXSpectrum48_Keys)KeyMapping as ZXSpectrum48_Keys).GetLineStatus((byte)(addr >> 8));
+            }
+
+            public override void PressKeys()
+            {
+                var km = (ZXSpectrum48_Keys)KeyMapping as ZXSpectrum48_Keys;
+                foreach (var k in KeyQueue)
+                {
+                    km.SetStatus(ZXSpectrum48_Keys.DX2Spec(k.Key), true);
+                }
+            }
+
+            /// <summary>
+            /// Removes old events from the KeyQueue
+            /// whilst sending keypresses to the spectrum
+            /// </summary>
+            protected override void SetKeys()
+            {
+                var km = (ZXSpectrum48_Keys)KeyMapping as ZXSpectrum48_Keys;
+
+                KeyQueue = KeyQueue.Distinct().ToList();
+                foreach (var k in KeyQueue)
+                {
+                    if (k.Pressed)
+                    {
+                        if (km.GetKeyStatus(ZXSpectrum48_Keys.DX2Spec(k.Key)))
+                        {
+                            // key is already pressed
+                        }
+                        else
+                        {
+                            // key is not pressed
+                            km.SetStatus(ZXSpectrum48_Keys.DX2Spec(k.Key), true);
+                        }
+                    }
+                    else
+                    {
+                        if (km.GetKeyStatus(ZXSpectrum48_Keys.DX2Spec(k.Key)))
+                        {
+                            // key is already pressed
+                            km.SetStatus(ZXSpectrum48_Keys.DX2Spec(k.Key), false);
+                        }
+                        else
+                        {
+                            // key is not pressed
+                        }
+                        
+                    }
+                }
+
+
+                // Key presses have been processed. Purge everything except the keys that are currently pressed              
+                for (int i = 0; i < KeyQueue.Count; i++)
+                {
+                    var key = KeyQueue[i].Key;
+                    bool isPressed = KeyQueue[i].Pressed;
+
+                    if (isPressed)
+                    {
+                        // seek forward and try and locate an unpress event
+                        for (int s = i + 1; s < KeyQueue.Count; s++)
+                        {
+                            if (KeyQueue[s].Key == key && !KeyQueue[s].Pressed)
+                            {
+                                // an unpress event has been found after the initial press event
+                                // mark the unpress and the original press for removal
+                                toPurge.Add(KeyQueue[i]);
+                                toPurge.Add(KeyQueue[s]);
+                            }
+                        }
+                    }
+                }
+
+                // remove all the unpress events
+                foreach (var u in KeyQueue.Where(a => a.Pressed == false))
+                {
+                    toPurge.Add(u);
+                }
+
+   
+
+                // distinct
+                toPurge = toPurge.Distinct().ToList();
+
+                // finally purge the list
+                foreach (var p in toPurge)
+                {
+                    KeyQueue.Remove(p);
+                }
+
+                toPurge.Clear();
             }
         }
 

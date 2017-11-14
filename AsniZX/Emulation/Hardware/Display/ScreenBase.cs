@@ -307,7 +307,7 @@ namespace AsniZX.Emulation.Hardware.Display
         /// </summary>
         /// <param name="fromTact">First ULA tact</param>
         /// <param name="toTact">Last ULA tact</param>
-        public void RenderScreen(int fromTact, int toTact)
+        public virtual void RenderScreen(int fromTact, int toTact)
         {
             // --- Adjust the tact boundaries
             fromTact = fromTact % ScreenConfiguration.UlaFrameTStateCount;
@@ -569,7 +569,7 @@ namespace AsniZX.Emulation.Hardware.Display
                     break;
             }
 
-            
+
 
             displayHandler?.UpdateDisplay
                 (
@@ -578,7 +578,8 @@ namespace AsniZX.Emulation.Hardware.Display
                         Width = newScreenWidth,
                         Height = newScreenHeight,
                         Buffer = translated,
-                        BufferBytes = _pixelBuffer
+                        BufferBytes = _pixelBuffer,
+                        BorderColour = HostZX.BorderDevice.BorderColour
                     }
                 );
         }

@@ -55,6 +55,10 @@
       <HintPath>..\packages\SharpDX.Direct3D11.4.1.0-ci184\lib\net45\SharpDX.Direct3D11.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SharpDX.DirectInput, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DirectInput.4.1.0-ci184\lib\net45\SharpDX.DirectInput.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SharpDX.DXGI, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.DXGI.4.1.0-ci184\lib\net45\SharpDX.DXGI.dll</HintPath>
       <Private>True</Private>
@@ -81,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Util.cs" />
+    <Compile Include="Emulation\FileFormats\Snapshot\SNA.cs" />
+    <Compile Include="Emulation\FileFormats\Snapshot\SnapshotHandler.cs" />
     <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\Exceptions.cs" />
     <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\FlagSetMask.cs" />
     <Compile Include="Emulation\Hardware\CPU\SpectnetideZ80\FlagsResetMask.cs" />
@@ -116,6 +122,8 @@
     <Compile Include="Emulation\Hardware\Display\ScreenRenderingPhase.cs" />
     <Compile Include="Emulation\Hardware\IO\InterruptBase.cs" />
     <Compile Include="Emulation\Hardware\IO\PortDeviceBase.cs" />
+    <Compile Include="Emulation\Hardware\Keyboard\KeyboardBase.cs" />
+    <Compile Include="Emulation\Hardware\Keyboard\KeyCodes.cs" />
     <Compile Include="Emulation\Hardware\Machine\Rom.cs" />
     <Compile Include="Emulation\Hardware\Machine\MachineType.cs" />
     <Compile Include="Emulation\Hardware\Machine\ZXBase.cs" />
@@ -124,6 +132,7 @@
     <Compile Include="Emulation\Interfaces\Devices\ICpuOperationBoundDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IFrameBoundDevice.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IKeyMapping.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IMemoryDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IPortDevice.cs" />
     <Compile Include="Emulation\EmulationMachine.cs" />
@@ -133,6 +142,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubSystem\Clock\ClockProvider.cs" />
+    <Compile Include="SubSystem\Input\KeyboardHandler.cs" />
     <Compile Include="SubSystem\Sound\SoundHandler.cs" />
     <Compile Include="SubSystem\Display\DisplayHandler.cs" />
     <Compile Include="SubSystem\Display\Enums.cs" />
@@ -213,7 +223,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Emulation\FileFormats\Disk\" />
+    <Folder Include="Emulation\FileFormats\Tape\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Emulation\Hardware\CPU\SpectnetideZ80\license.txt" />
   </ItemGroup>

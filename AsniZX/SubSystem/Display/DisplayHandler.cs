@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -104,6 +105,15 @@ namespace AsniZX.SubSystem.Display
             _renderer.Initialise(this);
         }
 
-        
+        /*
+        public SharpDX.Mathematics.Interop.RawColor4 GetRawColor4(uint color)
+        {
+            byte a = (byte)(color >> 24);
+            byte r = (byte)(color >> 16);
+            byte g = (byte)(color >> 8);
+            byte b = (byte)(color >> 0);
+            return SharpDX.Color.FromAbgr(a, r, g, b);
+        }
+        */
     }
 }

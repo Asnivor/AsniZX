@@ -186,7 +186,7 @@ namespace AsniZX.SubSystem.Display
             {
                 if (_form == null || d2dRenderTarget == null || !_form.ready || d2dRenderTarget.IsDisposed) return;
                 d2dRenderTarget.BeginDraw();
-                d2dRenderTarget.Clear(Color.White);
+                d2dRenderTarget.Clear(Color.FromRgba(Emulation.Hardware.Display.ScreenBase.ULAColours[fd.BorderColour]));
 
                 if (_form.gameStarted)
                 {

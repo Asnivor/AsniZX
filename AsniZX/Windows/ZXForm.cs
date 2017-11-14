@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using AsniZX.SubSystem.Display;
+using AsniZX.SubSystem.Input;
 
 namespace AsniZX
 {
@@ -20,6 +21,8 @@ namespace AsniZX
         public Emulation.EmulationMachine EmuMachine { get; set; }
 
         public bool IsFullScreen { get; set; }
+
+
 
         /// <summary>
         /// Current frames-per-second calculation
@@ -70,8 +73,10 @@ namespace AsniZX
 
             IsFullScreen = false;
 
+            KeyboardHandler.Initialize(this);
 
 
+            //_keyboardHandler = new KeyboardHandler();
             
 
             //SetRenderer((IRenderer)Activator.CreateInstance(typeof(D3DRenderer)));    
@@ -263,7 +268,7 @@ namespace AsniZX
         {
             displayHandler.magnification = magnification;
             this.Width = displayHandler.inputWidth * magnification;
-            this.Height = (displayHandler.inputHeight + statusStrip1.Height + MainMenuStrip.Height) * magnification;
+            this.Height = (displayHandler.inputHeight * magnification) + statusStrip1.Height + MainMenuStrip.Height;
             displayHandler.Init();
         }
 
@@ -271,8 +276,6 @@ namespace AsniZX
         {
 
         }
-
-        
 
         
     }

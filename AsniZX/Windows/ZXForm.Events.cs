@@ -1,4 +1,5 @@
-﻿using AsniZX.SubSystem.Display;
+﻿using AsniZX.Emulation.FileFormats.Snapshot;
+using AsniZX.SubSystem.Display;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,6 +148,31 @@ namespace AsniZX
         private void softResetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EmuMachine.Spectrum.Reset();
+        }
+
+        /// <summary>
+        /// loads various snapshot files
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void loadSnapshotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string fileName = "";
+            OpenFileDialog o = new OpenFileDialog();
+
+            o.Filter = "Snapshot Files|*.sna|All files (*.*)|*.*";
+
+            DialogResult dr = o.ShowDialog();
+
+            if (dr == DialogResult.OK)
+            {
+                fileName = o.FileName;
+                SnapshotHandler.LoadSnapshot(fileName);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }
