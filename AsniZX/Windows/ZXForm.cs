@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 using AsniZX.SubSystem.Display;
 using AsniZX.SubSystem.Input;
+using AsniZX.SubSystem.Sound;
+using AsniZX.Common;
 
 namespace AsniZX
 {
@@ -21,6 +23,9 @@ namespace AsniZX
         public Emulation.EmulationMachine EmuMachine { get; set; }
 
         public bool IsFullScreen { get; set; }
+
+
+        //public Sound Sound { get; set; }
 
 
 
@@ -54,7 +59,22 @@ namespace AsniZX
             InitializeComponent();
 
             MainForm = this;
+
+            Global.Config = new Config();
+
             displayHandler = new DisplayHandler();
+
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = false;
+                Thread.CurrentThread.Priority = ThreadPriority.Highest;
+                
+            }).Start();
+
+            //Sound = new Sound(this);
+            //Sound.StartSound();
+
+
 
             this.Width = displayHandler.inputWidth * displayHandler.magnification;
             this.Height = (displayHandler.inputHeight + statusStrip1.Height + MainMenuStrip.Height) * displayHandler.magnification;
@@ -74,6 +94,7 @@ namespace AsniZX
             IsFullScreen = false;
 
             KeyboardHandler.Initialize(this);
+            SoundHandler.Init();
 
 
             //_keyboardHandler = new KeyboardHandler();

@@ -12,6 +12,9 @@ using AsniZX.Emulation.Hardware.Display;
 using AsniZX.SubSystem.Display;
 using AsniZX.Emulation.Hardware.Keyboard;
 using AsniZX.SubSystem.Input;
+using AsniZX.Emulation.Interfaces.Devices;
+using AsniZX.SubSystem.Sound;
+using AsniZX.Emulation.Hardware.Tape;
 
 namespace AsniZX.Emulation.Hardware.Machine
 {
@@ -109,6 +112,16 @@ namespace AsniZX.Emulation.Hardware.Machine
         /// The virtual keyboard device
         /// </summary>
         public KeyboardBase KeyboardDevice { get; set; }
+
+        /// <summary>
+        /// The beeper device
+        /// </summary>
+        public IBeeperDevice BeeperDevice { get; set; }
+
+
+        public BeeperFrameProvider _beepFrameProvider { get; set; }
+
+        public TapeBase TapeDevice { get; set; }
 
         /// <summary>
         /// Does the actual rendering to the form handle
@@ -293,6 +306,8 @@ namespace AsniZX.Emulation.Hardware.Machine
                 dev.OverFlowTStates = OverFlowTStates;
                 dev.OnFrameCompleted();
             }
+
+            //_Machine.MainForm.Sound.UpdateSound(1f);
         }
 
         public event EventHandler FrameCompleted;

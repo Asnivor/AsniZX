@@ -43,6 +43,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\BizHawk.Z80A\Binaries\BizHawk.Emulation.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=1.8.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.8.3\lib\net35\NAudio.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SharpDX, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.4.1.0-ci184\lib\net45\SharpDX.dll</HintPath>
       <Private>True</Private>
@@ -84,6 +88,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Config.cs" />
+    <Compile Include="Common\Global.cs" />
     <Compile Include="Common\Util.cs" />
     <Compile Include="Emulation\FileFormats\Snapshot\SNA.cs" />
     <Compile Include="Emulation\FileFormats\Snapshot\SnapshotHandler.cs" />
@@ -127,8 +133,20 @@
     <Compile Include="Emulation\Hardware\Machine\Rom.cs" />
     <Compile Include="Emulation\Hardware\Machine\MachineType.cs" />
     <Compile Include="Emulation\Hardware\Machine\ZXBase.cs" />
-    <Compile Include="Emulation\Hardware\Machine\ZXSpectrum48.cs" />
+    <Compile Include="Emulation\Hardware\Tape\CommonTapeFilePlayer.cs" />
+    <Compile Include="Emulation\Hardware\Tape\MicPulseType.cs" />
+    <Compile Include="Emulation\Hardware\Tape\PlayPhase.cs" />
+    <Compile Include="Emulation\Hardware\Tape\SavePhase.cs" />
+    <Compile Include="Emulation\Hardware\Tape\TapeBase.cs" />
+    <Compile Include="Emulation\Hardware\Tape\TapeDataBlockPlayer.cs" />
+    <Compile Include="Emulation\Hardware\Tape\TapeOperationMode.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Border.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.cs" />
     <Compile Include="Emulation\Hardware\Memory\MemoryDeviceBase.cs" />
+    <Compile Include="Emulation\Hardware\Sound\Beeper\Beeper.cs" />
+    <Compile Include="Emulation\Hardware\Sound\Beeper\BeeperConfig.cs" />
+    <Compile Include="Emulation\Hardware\Sound\Beeper\Pulse.cs" />
+    <Compile Include="Emulation\Interfaces\Devices\IBeeperDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\ICpuOperationBoundDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IDevice.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IFrameBoundDevice.cs" />
@@ -138,11 +156,24 @@
     <Compile Include="Emulation\EmulationMachine.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IProvider.cs" />
     <Compile Include="Emulation\Interfaces\Devices\IZXBoundDevice.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.IBeeperDevice.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Interrupt.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Keyboard.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Memory.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Screen.cs" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Tape.cs" />
     <Compile Include="Extensions\Utility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubSystem\Clock\ClockProvider.cs" />
     <Compile Include="SubSystem\Input\KeyboardHandler.cs" />
+    <Compile Include="SubSystem\Sound\AudioPlaybackEngine.cs" />
+    <Compile Include="SubSystem\Sound\BeeperFrameProvider.cs" />
+    <Compile Include="SubSystem\Sound\Interfaces\IBufferedSoundProvider.cs" />
+    <Compile Include="SubSystem\Sound\Interfaces\ISoundOutput.cs" />
+    <Compile Include="SubSystem\Sound\Interfaces\ISoundProvider.cs" />
+    <Compile Include="SubSystem\Sound\Output\XAudio2SoundOutput.cs" />
+    <Compile Include="SubSystem\Sound\Sound.cs" />
     <Compile Include="SubSystem\Sound\SoundHandler.cs" />
     <Compile Include="SubSystem\Display\DisplayHandler.cs" />
     <Compile Include="SubSystem\Display\Enums.cs" />
@@ -154,6 +185,9 @@
     <Compile Include="SubSystem\Display\SoftRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SubSystem\Sound\Utilities\BufferedAsync.cs" />
+    <Compile Include="SubSystem\Sound\Utilities\SoundOutputProvider.cs" />
+    <Compile Include="SubSystem\Sound\Utilities\SyncToAsyncProvider.cs" />
     <Compile Include="Windows\ZXForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +210,7 @@
       <DependentUpon>ZXForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Emulation\Hardware\CPU\SpectnetideZ80\readme.md" />
+    <Compile Include="Emulation\Models\ZXSpectrum48\ZXSpectrum48.Port.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,7 +1,9 @@
 ﻿using AsniZX.Emulation.Hardware.Display;
 using AsniZX.Emulation.Hardware.Keyboard;
 using AsniZX.Emulation.Hardware.Machine;
+using AsniZX.Emulation.Hardware.Tape;
 using AsniZX.Emulation.Interfaces;
+using AsniZX.Emulation.Interfaces.Devices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +21,9 @@ namespace AsniZX.Emulation.Hardware.IO
 
         protected BorderBase _borderDevice;
         protected KeyboardBase _keyboardDevice;
-        //protected IBeeperDevice _beeperDevice;
+        protected IBeeperDevice _beeperDevice;
         //protected IKeyboardDevice _keyboardDevice;
-        //protected ITapeDevice _tapeDevice;
+        protected TapeBase _tapeDevice;
 
         // border
         // beeper
@@ -60,9 +62,9 @@ namespace AsniZX.Emulation.Hardware.IO
             HostZX = hostZX;
             _cpu = hostZX.Cpu;
             _borderDevice = hostZX.BorderDevice;
-            //_beeperDevice = hostVm.BeeperDevice;
+            _beeperDevice = hostZX.BeeperDevice;
             _keyboardDevice = hostZX.KeyboardDevice;
-            //_tapeDevice = hostVm.TapeDevice;
+            _tapeDevice = hostZX.TapeDevice;
         }
 
         #endregion

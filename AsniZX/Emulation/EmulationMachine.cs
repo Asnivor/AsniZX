@@ -1,4 +1,5 @@
 ﻿using AsniZX.Emulation.Hardware.Machine;
+using AsniZX.Emulation.Models.ZXSpectrum48;
 using AsniZX.SubSystem.Display;
 using System;
 using System.Threading;
