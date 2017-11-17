@@ -169,11 +169,6 @@
     <Compile Include="SubSystem\Input\KeyboardHandler.cs" />
     <Compile Include="SubSystem\Sound\AudioPlaybackEngine.cs" />
     <Compile Include="SubSystem\Sound\BeeperFrameProvider.cs" />
-    <Compile Include="SubSystem\Sound\Interfaces\IBufferedSoundProvider.cs" />
-    <Compile Include="SubSystem\Sound\Interfaces\ISoundOutput.cs" />
-    <Compile Include="SubSystem\Sound\Interfaces\ISoundProvider.cs" />
-    <Compile Include="SubSystem\Sound\Output\XAudio2SoundOutput.cs" />
-    <Compile Include="SubSystem\Sound\Sound.cs" />
     <Compile Include="SubSystem\Sound\SoundHandler.cs" />
     <Compile Include="SubSystem\Display\DisplayHandler.cs" />
     <Compile Include="SubSystem\Display\Enums.cs" />
@@ -185,9 +180,6 @@
     <Compile Include="SubSystem\Display\SoftRenderer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SubSystem\Sound\Utilities\BufferedAsync.cs" />
-    <Compile Include="SubSystem\Sound\Utilities\SoundOutputProvider.cs" />
-    <Compile Include="SubSystem\Sound\Utilities\SyncToAsyncProvider.cs" />
     <Compile Include="Windows\ZXForm.cs">
       <SubType>Form</SubType>
     </Compile>
