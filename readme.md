@@ -1,6 +1,8 @@
 ## AsniZX - ZX Spectrum Emulation 
 ### (or standing on the shoulders of giants)
 
+#NOTE: THIS IS NO LONGER MAINTAINED, WORKING, OR INDEED ANY GOOD. IT WILL BE DELETED SOON
+
 AsniZX is a work-in-progress first attempt at learning to write an emulator. Until there is actually a release I would stay well away :)
 
 #### Current State
